@@ -3,6 +3,14 @@ import uuid
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers import CustomUserManager
 
+'''Location model for the application'''
+class Location(models.Model):
+    location_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    description = models.TextField()
+    city = models.CharField(max_length=255)
+    country = models.CharField(max_length=255)
+    coordinates = models.CharField(max_length=255)
+
 '''User model for the application'''
 class User(AbstractBaseUser, PermissionsMixin):
     user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
