@@ -46,6 +46,7 @@ class Experience(models.Model):
     average_rating = models.FloatField(default=0.0)
     number_of_ratings = models.PositiveIntegerField(default=0)
     date_posted = models.DateTimeField(auto_now_add=True)
+    tags = models.ManyToManyField('Tag', related_name='experiences')
     price = models.CharField(
         max_length=10,
         choices=[
@@ -74,7 +75,7 @@ class Tip(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title
+        return self.content
 
 '''Wishlist model for the application'''
 class Wishlist(models.Model):
