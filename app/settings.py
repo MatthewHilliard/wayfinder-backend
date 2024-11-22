@@ -90,6 +90,8 @@ INSTALLED_APPS = [
     
     'corsheaders',
     
+    'cities_light',
+    
     'wayfinder.apps.WayfinderConfig',
 ]
 

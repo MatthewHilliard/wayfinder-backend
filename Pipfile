@@ -12,6 +12,7 @@ django-cors-headers = "*"
 djangorestframework = "*"
 djangorestframework-simplejwt = "*"
 pillow = "*"
+django-cities-light = "*"
 
 [dev-packages]
 
