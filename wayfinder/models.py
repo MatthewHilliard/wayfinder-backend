@@ -6,8 +6,8 @@ from .managers import CustomUserManager
 '''Location model for the application'''
 class Location(models.Model):
     location_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    country = models.ForeignKey('cities_light.Country', on_delete=models.SET_NULL, null=True, blank=True) 
-    city = models.ForeignKey('cities_light.City', on_delete=models.SET_NULL, null=True, blank=True)
+    country = models.ForeignKey('cities_light.Country', on_delete=models.SET_NULL, null=True) 
+    city = models.ForeignKey('cities_light.City', on_delete=models.SET_NULL, null=True)
     latitude = models.FloatField(default=0.0)
     longitude = models.FloatField(default=0.0)
 

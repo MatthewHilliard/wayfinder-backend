@@ -57,14 +57,14 @@ REST_FRAMEWORK = {
 
 # Only allow the following origins to access the API
 CORS_ALLOWED_ORIGINS = [
-    "http://127:0.0.1:8000",
-    "http://127:0.0.1:3000",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:3000",
 ]
 
 # Django REST Auth settings
 REST_AUTH = {
     "USE_JWT": True,
-    "JWT_AUTH_HTTPONLY": False
+    "JWT_AUTH_HTTPONLY": True
 }
 
 # Application definitions
@@ -92,7 +92,7 @@ INSTALLED_APPS = [
     
     'cities_light',
     
-    'wayfinder.apps.WayfinderConfig',
+    'wayfinder',
 ]
 
 MIDDLEWARE = [
@@ -107,7 +107,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'app.urls'
+ROOT_URLCONF = 'wayfinder.urls'
 
 TEMPLATES = [
     {
