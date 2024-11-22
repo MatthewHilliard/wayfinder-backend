@@ -67,7 +67,6 @@ class Experience(models.Model):
 '''Tip model for the application'''
 class Tip(models.Model):
     tip_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    title = models.CharField(max_length=255)
     content = models.TextField()
     country = models.ForeignKey('cities_light.Country', on_delete=models.SET_NULL, null=True, blank=True) 
     city = models.ForeignKey('cities_light.City', on_delete=models.SET_NULL, null=True, blank=True)
@@ -104,7 +103,7 @@ class Rating(models.Model):
     experience = models.ForeignKey('Experience', on_delete=models.CASCADE, related_name='ratings')
     comment = models.TextField(blank=True, null=True)
     date_posted = models.DateTimeField(auto_now_add=True)
-    rating_value = models.PositiveSmallIntegerField(blank=True, null=True)  # Rating 1-5, optional
+    rating_value = models.PositiveSmallIntegerField(blank=True, null=True)
 
     def __str__(self):
         return f"Rating by {self.user.name} on {self.experience.title}"
