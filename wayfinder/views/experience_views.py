@@ -1,11 +1,12 @@
 from django.http import JsonResponse
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from wayfinder.models import Experience
 from wayfinder.serializers import ExperienceSerializer
 
 '''--- GET REQUESTS ---'''
 
 @api_view(['GET'])
+@authentication_classes([])
 @permission_classes([])
 def get_experiences(request):
     '''

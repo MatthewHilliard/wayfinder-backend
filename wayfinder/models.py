@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 import uuid
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from .managers import CustomUserManager
@@ -47,6 +48,7 @@ class Experience(models.Model):
     number_of_ratings = models.PositiveIntegerField(default=0)
     date_posted = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField('Tag', related_name='experiences')
+    image = models.ImageField(upload_to='experience_images/', blank=True, null=True)
     price = models.CharField(
         max_length=10,
         choices=[
