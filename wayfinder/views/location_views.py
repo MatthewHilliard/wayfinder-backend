@@ -18,9 +18,9 @@ def city_search(request):
         
         for country in popular_countries:
             data.append({
-                "id": f"country-{country.id}",
+                "city_id": f"country-{country.id}",
                 "type": "country",
-                "name": country.name,
+                "name": None,
                 "region": None,
                 "country": country.name,
             })
@@ -35,20 +35,20 @@ def city_search(request):
     # Combine Results
     for country in countries:
         data.append({
-            "id": f"country-{country.id}",
+            "city_id": f"country-{country.id}",
             "type": "country",
-            "name": country.name,
+            "name": None,
             "region": None,
             "country": country.name,
         })
 
     for city in cities:
         data.append({
-            "id": f"city-{city.id}",
+            "city_id": f"city-{city.id}",
             "type": "city",
-            "name": city.name,
+            "name": city.name or None,
             "region": city.region.name if city.region else None,
             "country": city.country.name if city.country else None,
         })
 
-    return JsonResponse(data, safe=False)
+    return JsonResponse({'data': data}, safe=False)
