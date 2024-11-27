@@ -10,22 +10,6 @@ def city_search(request):
     
     data = [] # Declare initial data list
     
-    if not query:
-        # Prepopulate with popular countries when the query is empty
-        popular_countries = Country.objects.filter(name__in=[
-            "United States", "Canada", "China", "United Kingdom", "Australia", "Germany"
-        ])
-        
-        for country in popular_countries:
-            data.append({
-                "city_id": f"country-{country.id}",
-                "type": "country",
-                "name": None,
-                "region": None,
-                "country": country.name,
-            })
-        return JsonResponse(data, safe=False)
-    
     # Match countries
     countries = Country.objects.filter(name__icontains=query)[:5]
     
@@ -35,7 +19,7 @@ def city_search(request):
     # Combine Results
     for country in countries:
         data.append({
-            "city_id": f"country-{country.id}",
+            "city_id": country.id,
             "type": "country",
             "name": None,
             "region": None,
@@ -44,7 +28,7 @@ def city_search(request):
 
     for city in cities:
         data.append({
-            "city_id": f"city-{city.id}",
+            "city_id": city.id,
             "type": "city",
             "name": city.name or None,
             "region": city.region.name if city.region else None,
