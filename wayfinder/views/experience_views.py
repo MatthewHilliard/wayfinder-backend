@@ -51,8 +51,9 @@ def get_experiences_with_filters(request):
         # Convert comma-separated string into a list
         tag_list = tags.split(',')
         
-        # Filter experiences by tags
-        experiences = experiences.filter(tags__name__in=tag_list).distinct()
+        # Filter experiences to ensure they have all the selected tags
+        for tag_name in tag_list:
+            experiences = experiences.filter(tags__name=tag_name)
         
     # Step 3: Filter by location (if provided)
     if location_type and location_id:
