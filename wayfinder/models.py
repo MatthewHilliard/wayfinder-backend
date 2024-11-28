@@ -10,8 +10,8 @@ class Location(models.Model):
     country = models.ForeignKey('cities_light.Country', on_delete=models.SET_NULL, null=True)
     region = models.ForeignKey('cities_light.Region', on_delete=models.SET_NULL, null=True)
     city = models.ForeignKey('cities_light.City', on_delete=models.SET_NULL, null=True)
-    latitude = models.FloatField(default=0.0)
-    longitude = models.FloatField(default=0.0)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
 
 '''User model for the application'''
 class User(AbstractBaseUser, PermissionsMixin):
