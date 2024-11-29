@@ -105,7 +105,7 @@ class Rating(models.Model):
     rating_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='ratings')
     experience = models.ForeignKey('Experience', on_delete=models.CASCADE, related_name='ratings')
-    comment = models.TextField(blank=True, null=True)
+    comment = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
     rating_value = models.PositiveSmallIntegerField(blank=True, null=True)
 
