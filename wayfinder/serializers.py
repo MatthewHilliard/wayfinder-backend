@@ -48,3 +48,8 @@ class ExperienceSerializer(serializers.ModelSerializer):
         if obj.image:
             return f"{settings.WEBSITE_URL}{obj.image.url}"
         return None
+    
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'

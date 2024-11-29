@@ -12,7 +12,7 @@ from wayfinder.helpers import find_nearest_city
 '''--- POST REQUESTS ---'''
 @api_view(['POST'])
 @authentication_classes([JWTAuthentication])  # Use JWTAuthentication for token-based auth
-@permission_classes([IsAuthenticated])  # Enforce that only authenticated users can access
+@permission_classes([]) 
 def create_experience(request):
     """
     Create a new experience in the database.
@@ -32,7 +32,7 @@ def create_experience(request):
     # Step 1: Ensure the user is authenticated
     user = request.user
     if not user.is_authenticated:
-        return JsonResponse({'error': 'User is not authenticated.'}, status=401)
+        return JsonResponse({'error': 'You must be authenticated to perform this action.'}, status=401)
 
     # Step 2: Extract data from the request
     data = request.data
