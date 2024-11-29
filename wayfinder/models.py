@@ -15,7 +15,7 @@ class Location(models.Model):
 
 '''User model for the application'''
 class User(AbstractBaseUser, PermissionsMixin):
-    user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     bio = models.TextField(blank=True)
