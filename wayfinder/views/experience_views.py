@@ -1,8 +1,107 @@
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
-from wayfinder.models import Experience
+from wayfinder.models import Experience, Location
 from wayfinder.serializers import ExperienceSerializer
+from cities_light.models import Country, Region, City
+from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_201_CREATED
+
+'''--- POST REQUESTS ---'''
+@api_view(['POST'])
+@authentication_classes([])
+@permission_classes([IsAuthenticated])  # Ensure only authenticated users can create experiences
+def create_experience(request):
+    """
+    Create a new experience in the database.
+    
+    Steps:
+    1. Fetch the IDs for the city, region, or country from cities_light models.
+    2. Create a Location object if it doesn't exist.
+    3. Create an Experience object.
+    4. Return the created experience.
+
+    Parameters:
+        request: HTTP POST request with required fields:
+            - title
+            - description
+            - city_name (optional)
+            - region_name (optional)
+            - country_name (optional)
+            - latitude (optional, fallback from city/region if not provided)
+            - longitude (optional, fallback from city/region if not provided)
+            - tags (optional list of tag names)
+            - price (optional)
+            - start_time (optional)
+            - end_time (optional)
+            - date (optional)
+    
+    Returns:
+        JsonResponse: JSON response with the created experience or an error message.
+    """
+    data = request.data
+    user = request.user  # Get the authenticated user
+
+    # Step 1: Fetch city, region, or country by name
+    country_name = data.get('country_name')
+    region_name = data.get('region_name')
+    city_name = data.get('city_name')
+    latitude = data.get('latitude')
+    longitude = data.get('longitude')
+
+    country = Country.objects.filter(name__iexact=country_name).first() if country_name else None
+    region = Region.objects.filter(name__iexact=region_name, country=country).first() if region_name else None
+    city = City.objects.filter(name__iexact=city_name, region=region).first() if city_name else None
+
+    # If no latitude/longitude is provided, use the city's coordinates as fallback
+    if not latitude and city:
+        latitude = city.latitude
+    if not longitude and city:
+        longitude = city.longitude
+
+    if not latitude or not longitude:
+        return JsonResponse({'error': 'Latitude and longitude could not be determined.'}, status=HTTP_400_BAD_REQUEST)
+
+    # Step 2: Create or fetch the Location
+    location = Location.objects.get_or_create(
+        latitude=latitude,
+        longitude=longitude,
+        country=country,
+        region=region,
+        city=city,
+    )
+
+    # Step 3: Validate Experience data
+    title = data.get('title')
+    description = data.get('description')
+    tags = data.get('tags', [])
+    price = data.get('price')
+    start_time = data.get('start_time')
+    end_time = data.get('end_time')
+    date = data.get('date')
+
+    if not title or not description:
+        return JsonResponse({'error': 'Title and description are required.'}, status=HTTP_400_BAD_REQUEST)
+
+    # Step 4: Create the Experience
+    experience = Experience.objects.create(
+        title=title,
+        description=description,
+        location=location,
+        creator=user,
+        price=price,
+        start_time=start_time,
+        end_time=end_time,
+        date=date,
+    )
+
+    # Attach tags (if provided)
+    if tags:
+        experience.tags.set(tags)  # Ensure tags are already created in the database
+
+    # Serialize and return the created experience
+    serializer = ExperienceSerializer(experience)
+    return JsonResponse({'data': serializer.data}, status=HTTP_201_CREATED)
 
 '''--- GET REQUESTS ---'''
 
