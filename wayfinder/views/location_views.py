@@ -3,8 +3,6 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from cities_light.models import Country, City
 
 @api_view(['GET'])
-@authentication_classes([])
-@permission_classes([])
 def city_search(request):
     query = request.GET.get('q', '')  # Get the search query
     

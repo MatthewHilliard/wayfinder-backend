@@ -6,8 +6,6 @@ from wayfinder.serializers import TagSerializer
 '''--- GET REQUESTS ---'''
 
 @api_view(['GET'])
-@authentication_classes([])
-@permission_classes([])
 def get_tags(request):
     '''
     Get all tags from the database, sorted by name.

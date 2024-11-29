@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from cities_light.models import City, Country
+from cities_light.models import City, Country, Region
 from .models import *
 
 # NOTE: Each model should have a corresponding serializer to handle validation and
@@ -10,6 +10,11 @@ class CitySerializer(serializers.ModelSerializer):
     class Meta:
         model = City
         fields = ['id', 'name']  # Include relevant city fields
+        
+class RegionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Region
+        fields = ['id', 'name']  # Include relevant region fields
 
 class CountrySerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,6 +23,7 @@ class CountrySerializer(serializers.ModelSerializer):
 
 class LocationSerializer(serializers.ModelSerializer):
     city_info = CitySerializer(source='city', read_only=True)  # Serialize city info for GET requests
+    region_info = RegionSerializer(source='region', read_only=True)  # Serialize region info for GET requests
     country_info = CountrySerializer(source='country', read_only=True)  # Serialize country info for GET requests
     
     class Meta:

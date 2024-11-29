@@ -5,6 +5,7 @@ from wayfinder.views import experience_views
 # URL routes for calls relating to experiences
 urlpatterns = [
     # POST Requests
+    path('create_experience/', experience_views.create_experience, name='create_experience'),
     
     # GET Requests
     path('get_experiences/', experience_views.get_experiences, name='get_experiences'),
