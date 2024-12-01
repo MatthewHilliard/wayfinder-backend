@@ -8,6 +8,7 @@ from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_201_CREATED
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from wayfinder.helpers import find_nearest_city
 from rest_framework.permissions import AllowAny
+from django.db.models import Q
 import json
 
 '''--- POST REQUESTS ---'''
@@ -73,12 +74,10 @@ def create_experience(request):
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Tags must be a valid JSON array.'}, status=HTTP_400_BAD_REQUEST)
 
-    # Step 4: Fetch country, region, or city
-    country = Country.objects.filter(name__iexact=country_name).first() if country_name else None
-    region = Region.objects.filter(name__iexact=region_name, country=country).first() if region_name else None
-
-    # Try to find the city by name
-    city = City.objects.filter(name__iexact=city_name, region=region).first() if city_name else None
+    # Step 4: Fetch country, region, or city with partial matching
+    country = Country.objects.filter(name__icontains=country_name).first() if country_name else None
+    region = Region.objects.filter(Q(name__icontains=region_name) & Q(country=country)).first() if region_name else None
+    city = City.objects.filter(Q(name__icontains=city_name) & Q(region=region)).first() if city_name else None
 
     # If no city is found by name, fallback to latitude/longitude incrementally
     if not city:

@@ -12,8 +12,18 @@ class Location(models.Model):
     city = models.ForeignKey('cities_light.City', on_delete=models.SET_NULL, null=True)
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
+    
+    def __str__(self):
+        if self.city is not None:
+            return f"{self.city.name}, {self.city.region.name if self.city.region else 'Unknown Region'}, {self.city.country.name if self.city.country else 'Unknown Country'}"
+        elif self.region is not None:
+            return f"{self.region.name}, {self.region.country.name if self.region.country else 'Unknown Country'}"
+        elif self.country is not None:
+            return f"{self.country.name}"
+        else:
+            return "Unknown Location"
 
-'''User model for the application'''
+'''User model for the a pplication'''
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
