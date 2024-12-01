@@ -136,6 +136,7 @@ def get_experiences_with_filters(request):
 
     Parameters:
         request: Request object with query parameters for "tags" (comma-separated list of tag names),
+                 "search_query" (search query for title and description),
                  "location_type" (e.g., "country", "city"),
                  and "location_id" (ID of the selected location)
 
@@ -144,6 +145,7 @@ def get_experiences_with_filters(request):
     '''
     # Step 1: Get query parameters
     tags = request.GET.get('tags', None)
+    search_query = request.GET.get('search_query', None)
     location_type = request.GET.get('location_type', None)
     location_id = request.GET.get('location_id', None)
     
@@ -158,8 +160,14 @@ def get_experiences_with_filters(request):
         # Filter experiences to ensure they have all the selected tags
         for tag_name in tag_list:
             experiences = experiences.filter(tags__name=tag_name)
+            
+    # Step 3: Filter by search query (if provided)
+    if search_query:
+        experiences = experiences.filter(
+            Q(title__icontains=search_query) | Q(description__icontains=search_query)
+        )
         
-    # Step 3: Filter by location (if provided)
+    # Step 4: Filter by location (if provided)
     if location_type and location_id:
         if location_type == 'country':
             # Filter by country (match experiences where the location's country matches the location_id)
@@ -168,10 +176,10 @@ def get_experiences_with_filters(request):
             # Filter by city (match experiences where the location's city matches the location_id)
             experiences = experiences.filter(location__city_id=location_id)
         
-    # Step 4: Sort by average rating and number of ratings
+    # Step 5: Sort by average rating and number of ratings
     experiences = experiences.order_by('-average_rating', '-number_of_ratings')
     
-    # Step 5: Serialize and return the response
+    # Step 6: Serialize and return the response
     serializer = ExperienceSerializer(experiences, many=True)
     return JsonResponse({'data': serializer.data})
 
