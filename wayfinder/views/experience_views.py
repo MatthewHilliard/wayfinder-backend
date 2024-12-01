@@ -1,14 +1,14 @@
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
-from wayfinder.models import Experience, Location, User
+from wayfinder.models import Experience, Location
 from wayfinder.serializers import ExperienceSerializer
 from cities_light.models import Country, Region, City
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_201_CREATED
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from wayfinder.helpers import find_nearest_city
 from rest_framework.permissions import AllowAny
+import json
 
 '''--- POST REQUESTS ---'''
 
@@ -47,9 +47,7 @@ def create_experience(request):
     city_name = data.get('city_name')
     tags = data.get('tags', [])
     price = data.get('price')
-    start_time = data.get('start_time')
-    end_time = data.get('end_time')
-    date = data.get('date')
+    image = request.FILES.get('image')  # Handle the uploaded image file
 
     # Step 3: Validate required fields
     if not title or not description or latitude is None or longitude is None:
@@ -57,6 +55,23 @@ def create_experience(request):
             {'error': 'Title, description, latitude, and longitude are required.'},
             status=HTTP_400_BAD_REQUEST
         )
+        
+    try:
+        # Convert latitude and longitude to float
+        latitude = float(latitude)
+        longitude = float(longitude)
+    except ValueError:
+        return JsonResponse(
+            {'error': 'Latitude and longitude must be valid floating-point numbers.'},
+            status=HTTP_400_BAD_REQUEST
+        )
+        
+    # Parse tags from JSON string to a list
+    if tags:
+        try:
+            tags = json.loads(tags)  # Convert JSON string to Python list
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Tags must be a valid JSON array.'}, status=HTTP_400_BAD_REQUEST)
 
     # Step 4: Fetch country, region, or city
     country = Country.objects.filter(name__iexact=country_name).first() if country_name else None
@@ -83,9 +98,7 @@ def create_experience(request):
         location=location,
         creator=user,
         price=price,
-        start_time=start_time,
-        end_time=end_time,
-        date=date,
+        image=image
     )
 
     # Step 7: Attach tags (if provided)
