@@ -1,8 +1,11 @@
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from cities_light.models import Country, City
+from rest_framework.permissions import AllowAny
 
 @api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny]) 
 def city_search(request):
     query = request.GET.get('q', '')  # Get the search query
     

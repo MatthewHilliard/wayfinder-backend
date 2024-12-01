@@ -3,8 +3,11 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from wayfinder.models import User
 from django.shortcuts import get_object_or_404
 from wayfinder.serializers import UserSerializer
+from rest_framework.permissions import AllowAny
 
 @api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny]) 
 def get_user_by_id(request, user_id):
     '''
     Gets an user from the database by its user_id.

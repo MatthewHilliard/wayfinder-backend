@@ -8,8 +8,10 @@ from cities_light.models import Country, Region, City
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_201_CREATED
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from wayfinder.helpers import find_nearest_city
+from rest_framework.permissions import AllowAny
 
 '''--- POST REQUESTS ---'''
+
 @api_view(['POST'])
 @authentication_classes([JWTAuthentication])  # Use JWTAuthentication for token-based auth
 @permission_classes([]) 
@@ -97,6 +99,8 @@ def create_experience(request):
 '''--- GET REQUESTS ---'''
 
 @api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny]) 
 def get_experiences(request):
     '''
     Get all experiences from the database.
@@ -112,6 +116,8 @@ def get_experiences(request):
     return JsonResponse({'data': serializer.data})
 
 @api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny]) 
 def get_experiences_with_filters(request):
     '''
     Get all experiences from the database with filters.
@@ -158,6 +164,8 @@ def get_experiences_with_filters(request):
     return JsonResponse({'data': serializer.data})
 
 @api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny]) 
 def get_experience_by_id(request, experience_id):
     '''
     Gets an experience from the database by its experience_id.
