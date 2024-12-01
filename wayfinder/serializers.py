@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from cities_light.models import City, Country, Region
 from .models import *
+from dj_rest_auth.registration.serializers import RegisterSerializer
 
 # NOTE: Each model should have a corresponding serializer to handle validation and
 # conversion of incoming data, as well as serializing outgoing data to be
@@ -20,6 +21,14 @@ class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
         fields = ['id', 'name']  # Include relevant country fields
+        
+class CustomRegisterSerializer(RegisterSerializer):
+    name = serializers.CharField(max_length=100)
+
+    def custom_signup(self, request, user):
+        # Set the name field explicitly during signup
+        user.name = self.validated_data.get('name', '')
+        user.save(update_fields=['name'])
 
 class LocationSerializer(serializers.ModelSerializer):
     city_info = CitySerializer(source='city', read_only=True)  # Serialize city info for GET requests

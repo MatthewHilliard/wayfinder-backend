@@ -39,21 +39,28 @@ def create_rating(request):
     comment = data.get('comment')
 
     # Step 3: Validate required fields
-    if not experience_id or rating_value is None:
+    if not experience_id:
         return JsonResponse(
-            {'error': 'Experience ID and rating value are required.'},
+            {'error': 'Experience ID is are required.'},
+            status=HTTP_400_BAD_REQUEST
+        )
+    if comment is None or not isinstance(comment, str) or not comment.strip():
+        return JsonResponse(
+            {'error': 'A valid comment is required.'},
             status=HTTP_400_BAD_REQUEST
         )
 
-    try:
-        rating_value = int(rating_value)
-        if rating_value < 1 or rating_value > 5:
-            raise ValueError
-    except ValueError:
-        return JsonResponse(
-            {'error': 'Rating value must be an integer between 1 and 5.'},
-            status=HTTP_400_BAD_REQUEST
-        )
+    # Validate and parse rating_value (optional field)
+    if rating_value is not None:
+        try:
+            rating_value = int(rating_value)
+            if not (1 <= rating_value <= 5):
+                raise ValueError
+        except (TypeError, ValueError):
+            return JsonResponse(
+                {'error': 'Rating value must be an integer between 1 and 5.'},
+                status=HTTP_400_BAD_REQUEST
+            )
 
     # Step 4: Get the experience or throw 404 if not found
     experience = get_object_or_404(Experience, experience_id=experience_id)
@@ -69,10 +76,13 @@ def create_rating(request):
     # Step 6: Update the experience's average rating and number of ratings
     total_ratings = experience.number_of_ratings
     new_total_ratings = total_ratings + 1
-    new_average_rating = ((experience.average_rating * total_ratings) + rating_value) / new_total_ratings
-
-    # Update fields in the database
-    experience.average_rating = new_average_rating
+    
+    # Update the average rating if a rating value was provided
+    if rating_value is not None:
+        new_average_rating = ((experience.average_rating * total_ratings) + rating_value) / new_total_ratings
+        experience.average_rating = new_average_rating
+    
+    # Update fields in the database for number of ratings
     experience.number_of_ratings = new_total_ratings
     experience.save()
 
