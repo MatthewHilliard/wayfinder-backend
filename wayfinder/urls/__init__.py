@@ -10,6 +10,7 @@ from .tag_urls import urlpatterns as tag_urls
 from .location_urls import urlpatterns as location_urls
 from .auth_urls import urlpatterns as auth_urls
 from .user_urls import urlpatterns as user_urls
+from .rating_urls import urlpatterns as rating_urls
 
 # All URL routes
 urlpatterns = [
@@ -19,4 +20,5 @@ urlpatterns = [
     path('locations/', include(location_urls)),
     path('tags/', include(tag_urls)),
     path('users/', include(user_urls)),
+    path('ratings/', include(rating_urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

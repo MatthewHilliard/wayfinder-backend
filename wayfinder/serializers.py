@@ -53,3 +53,11 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+        
+class RatingSerializer(serializers.ModelSerializer):
+    user_info = UserSerializer(source='user', read_only=True)  # Serialize user info for GET requests
+    experience_info = ExperienceSerializer(source='experience', read_only=True)  # Serialize experience info for GET requests
+    
+    class Meta:
+        model = Rating
+        fields = '__all__'
