@@ -70,3 +70,10 @@ class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
         fields = '__all__'
+        
+class WishlistSerializer(serializers.ModelSerializer):
+    user_info = UserSerializer(source='user', read_only=True)  # Serialize user info for GET requests
+    
+    class Meta:
+        model = Wishlist
+        fields = '__all__'
