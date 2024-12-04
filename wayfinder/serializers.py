@@ -77,3 +77,10 @@ class WishlistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wishlist
         fields = '__all__'
+        
+class WishlistItemSerializer(serializers.ModelSerializer):
+    experience_info = ExperienceSerializer(source='experience', read_only=True)  # Serialize experience info for GET requests
+    
+    class Meta:
+        model = WishlistItem
+        fields = '__all__'
