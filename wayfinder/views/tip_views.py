@@ -76,6 +76,43 @@ def create_tip(request):
 @api_view(['GET'])
 @authentication_classes([])
 @permission_classes([AllowAny])
+def get_tips_with_filters(request):
+    '''
+    Get all tips from the database with filters.
+
+    Parameters:
+        request: Request object with query parameters for "location_type" (e.g., "country", "city"),
+                 and "location_id" (ID of the selected location)
+
+    Returns:
+        JsonResponse: JSON response with filtered tips
+    '''
+    # Step 1: Get query parameters
+    location_type = request.GET.get('location_type', None)
+    location_id = request.GET.get('location_id', None)
+    
+    # Start with all tips
+    tips = Tip.objects.all()
+    
+    # Step 2: Filter by location (if provided)
+    if location_type and location_id:
+        if location_type == 'country':
+            # Filter by country (match tips where the location's country matches the location_id)
+            tips = tips.filter(country=location_id)
+        elif location_type == 'city':
+            # Filter by city (match tips where the location's city matches the location_id)
+            tips = tips.filter(city=location_id)
+    
+    # Step 3: Sort tips by creation date (newest first)
+    tips = tips.order_by('-date_posted')
+    
+    # Step 4: Serialize and return the response
+    serializer = TipSerializer(tips, many=True)
+    return JsonResponse({'data': serializer.data})
+
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny])
 def get_tips_by_user_id(request, user_id):
     '''
     Get all tips created by a specific user.
