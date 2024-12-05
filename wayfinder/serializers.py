@@ -24,11 +24,35 @@ class CountrySerializer(serializers.ModelSerializer):
         
 class CustomRegisterSerializer(RegisterSerializer):
     name = serializers.CharField(max_length=100)
+    location_type = serializers.CharField(max_length=50, required=True)
+    location_id = serializers.IntegerField(required=True)
 
     def custom_signup(self, request, user):
         # Set the name field explicitly during signup
         user.name = self.validated_data.get('name', '')
-        user.save(update_fields=['name'])
+        
+        # Initialize location fields
+        user.country = None
+        user.city = None
+        
+        # Extract location data from the request
+        location_type = self.validated_data.get('location_type', '').strip()
+        location_id = self.validated_data.get('location_id')
+        
+        # Match the location type and ID
+        if location_type and location_id:
+            if location_type == 'country':
+                country = Country.objects.filter(id=location_id).first()
+                if country:
+                    user.country = country
+            elif location_type == 'city':
+                city = City.objects.filter(id=location_id).first()
+                if city:
+                    user.city = city
+                    user.country = city.country
+        
+        # Save user with updated fields
+        user.save(update_fields=["name", "country", "city"])
 
 class LocationSerializer(serializers.ModelSerializer):
     city_info = CitySerializer(source='city', read_only=True)  # Serialize city info for GET requests
