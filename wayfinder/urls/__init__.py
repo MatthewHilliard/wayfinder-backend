@@ -12,6 +12,7 @@ from .auth_urls import urlpatterns as auth_urls
 from .user_urls import urlpatterns as user_urls
 from .rating_urls import urlpatterns as rating_urls
 from .wishlist_urls import urlpatterns as wishlist_urls
+from .tips_urls import urlpatterns as tips_urls
 
 # All URL routes
 urlpatterns = [
@@ -23,4 +24,5 @@ urlpatterns = [
     path('users/', include(user_urls)),
     path('ratings/', include(rating_urls)),
     path('wishlists/', include(wishlist_urls)),
+    path('tips/', include(tips_urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

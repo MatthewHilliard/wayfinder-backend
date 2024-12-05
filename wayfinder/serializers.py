@@ -84,3 +84,12 @@ class WishlistItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = WishlistItem
         fields = '__all__'
+        
+class TipSerializer(serializers.ModelSerializer):
+    creator_info = UserSerializer(source='creator', read_only=True)  # Serialize creator info for GET requests
+    country_info = CountrySerializer(source='country', read_only=True)  # Serialize country info for GET requests
+    city_info = CitySerializer(source='city', read_only=True)  # Serialize city info for GET requests
+    
+    class Meta:
+        model = Tip
+        fields = '__all__'

@@ -200,3 +200,21 @@ def get_experience_by_id(request, experience_id):
     experience = get_object_or_404(Experience, experience_id=experience_id)
     serializer = ExperienceSerializer(experience)
     return JsonResponse({'data': serializer.data})
+
+@api_view(['GET'])
+@authentication_classes([])
+@permission_classes([AllowAny])
+def get_experiences_by_user_id(request, user_id):
+    '''
+    Get all experiences created by a specific user.
+
+    Parameters:
+        request: Request object
+        user_id: ID of the user
+
+    Returns:
+        JsonResponse: JSON response with all experiences created by the user
+    '''
+    experiences = Experience.objects.filter(creator=user_id).order_by('-date_posted')
+    serializer = ExperienceSerializer(experiences, many=True)
+    return JsonResponse({'data': serializer.data})
