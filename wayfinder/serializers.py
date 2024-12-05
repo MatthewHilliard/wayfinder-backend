@@ -83,6 +83,9 @@ class ExperienceSerializer(serializers.ModelSerializer):
         return None
     
 class UserSerializer(serializers.ModelSerializer):
+    country_info = CountrySerializer(source='country', read_only=True)  # Serialize country info for GET requests
+    city_info = CitySerializer(source='city', read_only=True)  # Serialize city info for GET requests
+    
     class Meta:
         model = User
         fields = '__all__'
