@@ -27,4 +27,4 @@ COPY . .
 RUN python manage.py collectstatic --noinput
 
 # Run Gunicorn for production
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "wayfinder.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app.wsgi:application"]

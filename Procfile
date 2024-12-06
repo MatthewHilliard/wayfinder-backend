@@ -1,1 +1,1 @@
-web: gunicorn wayfinder-backend.wsgi --log-file -
+web: gunicorn app.wsgi:application --log-file -
