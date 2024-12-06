@@ -75,3 +75,18 @@ def get_user_wishlists(request, user_id):
     wishlists = Wishlist.objects.filter(user=user)
     serializer = WishlistSerializer(wishlists, many=True)
     return JsonResponse({"data": serializer.data}, status=200)
+
+@api_view(['GET'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([])
+def get_wishlist_items(request, wishlist_id):
+    user = request.user # Get the authenticated user
+    
+    # Fetch the wishlist
+    wishlist = get_object_or_404(Wishlist, wishlist_id=wishlist_id, user=user)
+
+    # Fetch wishlists for the authenticated user
+    wishlist_items = WishlistItem.objects.filter(wishlist=wishlist)
+    serializer = WishlistItemSerializer(wishlist_items, many=True)
+    
+    return JsonResponse({"data": serializer.data}, status=200)

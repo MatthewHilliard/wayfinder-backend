@@ -10,4 +10,5 @@ urlpatterns = [
     
     # GET Requests
     path('get_user_wishlists/<str:user_id>', wishlist_views.get_user_wishlists, name='get_user_wishlists'),
+    path('get_wishlist_items/<str:wishlist_id>', wishlist_views.get_wishlist_items, name='get_wishlist_items'),
 ]
