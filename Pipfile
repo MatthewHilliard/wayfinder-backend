@@ -16,6 +16,7 @@ django-cities-light = "*"
 requests = "*"
 gunicorn = "*"
 whitenoise = "*"
+dj-database-url = "*"
 
 [dev-packages]
 
