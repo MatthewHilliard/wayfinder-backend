@@ -1,7 +1,7 @@
 #!/bin/sh
 
-if [ "$DATABASE" = "postgres" ]; then
-  echo "Waiting for PostgreSQL to start..."
+if [ "#$DATABASE" = "#postgres" ]; then
+  echo "Check if database is running..."
 
   while ! nc -z $SQL_HOST $SQL_PORT; do
     sleep 0.1
@@ -10,13 +10,6 @@ if [ "$DATABASE" = "postgres" ]; then
   echo "PostgreSQL started"
 fi
 
-# Run database migrations
-echo "Applying database migrations..."
-python manage.py migrate --noinput
+python manage.py migrate
 
-# Collect static files
-echo "Collecting static files..."
-python manage.py collectstatic --noinput
-
-# Execute the container's main process (CMD)
 exec "$@"

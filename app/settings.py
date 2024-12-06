@@ -1,20 +1,17 @@
 import os
 from datetime import timedelta
 from pathlib import Path
-import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# Define the secret key, or generate a random one if building the app through Docker for the first time
-SECRET_KEY = os.environ.get('SECRET_KEY', None)
-if not SECRET_KEY:
-    import secrets
-    SECRET_KEY = secrets.token_urlsafe(32)
-    
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG', default=False))
 
@@ -31,7 +28,7 @@ SITE_ID = 1
 if DEBUG:
     WEBSITE_URL = 'http://localhost:8000'
 else:
-    WEBSITE_URL = 'https://wayfinder-backend-prod-aac06f5eb6d4.herokuapp.com/'
+    WEBSITE_URL = 'https://wayfinder-backend-prod-aac06f5eb6d4.herokuapp.com'
 
 # JWT object settings
 SIMPLE_JWT = {
@@ -66,18 +63,21 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://localhost:3000",
     "https://wayfinder-backend-prod-aac06f5eb6d4.herokuapp.com",
+    "https://wayfinder-backend-prod-aac06f5eb6d4.herokuapp.com:1337"
 ]
 
 CORS_TRUSTED_ORIGINS = [
     "http://localhost:8000",
     "http://localhost:3000",
     "https://wayfinder-backend-prod-aac06f5eb6d4.herokuapp.com",
+    "https://wayfinder-backend-prod-aac06f5eb6d4.herokuapp.com:1337"
 ]
 
 CORS_ORIGINS_WHITELIST = [
     "http://localhost:8000",
     "http://localhost:3000",
     "https://wayfinder-backend-prod-aac06f5eb6d4.herokuapp.com",
+    "https://wayfinder-backend-prod-aac06f5eb6d4.herokuapp.com:1337"
 ]
 
 # Django REST Auth settings
@@ -163,11 +163,6 @@ DATABASES = {
     }
 }
 
-# Use a dummy database engine during the collectstatic phase
-if 'collectstatic' in sys.argv:
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.dummy',
-    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -203,16 +198,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = '/static/'  # URL to serve static files
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Absolute path for collectstatic
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # Additional directories (if any)
-]
-
-# Media files (uploads)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
