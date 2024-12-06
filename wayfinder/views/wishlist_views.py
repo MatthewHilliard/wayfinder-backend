@@ -8,6 +8,27 @@ from django.shortcuts import get_object_or_404
 @api_view(['POST'])
 @authentication_classes([JWTAuthentication])
 @permission_classes([])
+def create_wishlist(request):
+    # Get request data
+    user_id = request.data.get('user_id')
+    title = request.data.get('title')
+
+    # Get the authenticated user
+    user = request.user
+
+    # Ensure the authenticated user is creating their own wishlists
+    if str(user.id) != str(user_id):
+        return JsonResponse({'error': 'You are not authorized to access this resource.'}, status=403)
+
+    # Create a new Wishlist
+    wishlist = Wishlist.objects.create(user=user, title=title)
+    serializer = WishlistSerializer(wishlist)
+
+    return JsonResponse({"data": serializer.data}, status=201)
+
+@api_view(['POST'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([])
 def create_wishlist_item(request, wishlist_id):    
     # Get user_id and experience_id from request data
     user_id = request.data.get('user_id')

@@ -5,6 +5,7 @@ from wayfinder.views import wishlist_views
 # URL routes for calls relating to wishlists
 urlpatterns = [
     # POST Requests
+    path('create_wishlist', wishlist_views.create_wishlist, name='create_wishlist'),
     path('create_wishlist_item/<str:wishlist_id>', wishlist_views.create_wishlist_item, name='create_wishlist_item'),
     
     # GET Requests
