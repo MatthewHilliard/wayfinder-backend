@@ -85,10 +85,16 @@ class ExperienceSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     country_info = CountrySerializer(source='country', read_only=True)  # Serialize country info for GET requests
     city_info = CitySerializer(source='city', read_only=True)  # Serialize city info for GET requests
+    profile_picture_url = serializers.SerializerMethodField()  # Add custom field for profile picture URL
     
     class Meta:
         model = User
         fields = '__all__'
+        
+    def get_profile_picture_url(self, obj):
+        if obj.profile_picture:
+            return f"{settings.WEBSITE_URL}{obj.profile_picture.url}"
+        return None
         
 class RatingSerializer(serializers.ModelSerializer):
     user_info = UserSerializer(source='user', read_only=True)  # Serialize user info for GET requests

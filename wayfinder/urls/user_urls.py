@@ -6,4 +6,7 @@ from wayfinder.views import user_views
 urlpatterns = [
     # GET Requests
     path('get_user_by_id/<str:user_id>/', user_views.get_user_by_id, name='get_user_by_id'),
+    
+    # PUT Requests
+    path('update_user/<str:user_id>/', user_views.update_user, name='update_user'),
 ]
