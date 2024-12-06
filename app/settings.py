@@ -134,14 +134,6 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# Use a dummy database engine during the collectstatic phase
-if 'collectstatic' in sys.argv:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.dummy',
-        }
-    }
-
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('SQL_ENGINE'),
@@ -153,6 +145,11 @@ DATABASES = {
     }
 }
 
+# Use a dummy database engine during the collectstatic phase
+if 'collectstatic' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.dummy',
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
