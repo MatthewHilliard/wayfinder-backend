@@ -73,17 +73,16 @@ def create_rating(request):
         comment=comment
     )
 
-    # Step 6: Update the experience's average rating and number of ratings
-    total_ratings = experience.number_of_ratings
-    new_total_ratings = total_ratings + 1
-    
-    # Update the average rating if a rating value was provided
+    # Step 6: Update the experience's average rating and number of ratings if a rating value was provided
     if rating_value is not None:
+        total_ratings = experience.number_of_ratings
+        new_total_ratings = total_ratings + 1
         new_average_rating = ((experience.average_rating * total_ratings) + rating_value) / new_total_ratings
         experience.average_rating = new_average_rating
     
-    # Update fields in the database for number of ratings
-    experience.number_of_ratings = new_total_ratings
+        # Update fields in the database for number of ratings
+        experience.number_of_ratings = new_total_ratings
+    
     experience.save()
 
     # Step 7: Serialize and return the created rating
