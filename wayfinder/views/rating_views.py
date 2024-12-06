@@ -9,7 +9,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.shortcuts import get_object_or_404
 
-'''--- POST REQUESTS ---'''
+"""--- POST REQUESTS ---"""
 
 @api_view(['POST'])
 @authentication_classes([JWTAuthentication])
@@ -89,13 +89,13 @@ def create_rating(request):
     serializer = RatingSerializer(rating)
     return JsonResponse({'data': serializer.data}, status=HTTP_201_CREATED)
 
-'''--- GET REQUESTS ---'''
+"""--- GET REQUESTS ---"""
 
 @api_view(['GET'])
 @authentication_classes([])
 @permission_classes([AllowAny]) 
 def get_experience_ratings(request, experience_id):
-    '''
+    """
     Get all ratings for a specific experience, sorted by date (most recent first).
 
     Parameters:
@@ -104,7 +104,7 @@ def get_experience_ratings(request, experience_id):
 
     Returns:
         JsonResponse: JSON response with all ratings for the experience sorted by date
-    '''
+    """
     # Get all ratings for the experience sorted by date, throw 404 if none found
     ratings = get_list_or_404(Rating.objects.order_by('-date_posted'), experience_id=experience_id)
     

@@ -8,7 +8,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_201_CREATED
 
-'''--- POST REQUESTS ---'''
+"""--- POST REQUESTS ---"""
 
 @api_view(['POST'])
 @authentication_classes([JWTAuthentication])
@@ -71,13 +71,13 @@ def create_tip(request):
     serializer = TipSerializer(tip)
     return JsonResponse({'data': serializer.data}, status=HTTP_201_CREATED)
 
-'''--- GET REQUESTS ---'''
+"""--- GET REQUESTS ---"""
 
 @api_view(['GET'])
 @authentication_classes([])
 @permission_classes([AllowAny])
 def get_tips_with_filters(request):
-    '''
+    """
     Get all tips from the database with filters.
 
     Parameters:
@@ -86,7 +86,7 @@ def get_tips_with_filters(request):
 
     Returns:
         JsonResponse: JSON response with filtered tips
-    '''
+    """
     # Step 1: Get query parameters
     location_type = request.GET.get('location_type', None)
     location_id = request.GET.get('location_id', None)
@@ -114,7 +114,7 @@ def get_tips_with_filters(request):
 @authentication_classes([])
 @permission_classes([AllowAny])
 def get_tips_by_user_id(request, user_id):
-    '''
+    """
     Get all tips created by a specific user.
 
     Parameters:
@@ -123,7 +123,7 @@ def get_tips_by_user_id(request, user_id):
 
     Returns:
         JsonResponse: JSON response with all tips created by the user
-    '''
+    """
     tips = Tip.objects.filter(creator=user_id).order_by('-date_posted')
     serializer = TipSerializer(tips, many=True)
     return JsonResponse({'data': serializer.data})

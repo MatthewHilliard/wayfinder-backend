@@ -14,7 +14,7 @@ from .rating_urls import urlpatterns as rating_urls
 from .wishlist_urls import urlpatterns as wishlist_urls
 from .tips_urls import urlpatterns as tips_urls
 
-# All URL routes
+# All URL routes are defined here
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include(auth_urls)),
@@ -27,5 +27,6 @@ urlpatterns = [
     path('tips/', include(tips_urls)),
 ]
 
+# If in debug mode, add media url
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

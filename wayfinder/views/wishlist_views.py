@@ -9,6 +9,9 @@ from django.shortcuts import get_object_or_404
 @authentication_classes([JWTAuthentication])
 @permission_classes([])
 def create_wishlist(request):
+    """
+    Creates a new wishlist for a specific user, ensuring the user is authenticated.
+    """
     # Get request data
     user_id = request.data.get('user_id')
     title = request.data.get('title')
@@ -29,7 +32,10 @@ def create_wishlist(request):
 @api_view(['POST'])
 @authentication_classes([JWTAuthentication])
 @permission_classes([])
-def create_wishlist_item(request, wishlist_id):    
+def create_wishlist_item(request, wishlist_id): 
+    """
+    Creates a new wishlist item for a specific wishlist, ensuring the user is authenticated and the wishlist belongs to the user.
+    """   
     # Get user_id and experience_id from request data
     user_id = request.data.get('user_id')
     experience_id = request.data.get('experience_id')
@@ -65,6 +71,9 @@ def create_wishlist_item(request, wishlist_id):
 @authentication_classes([JWTAuthentication])
 @permission_classes([]) 
 def get_user_wishlists(request, user_id):
+    """
+    Gets all wishlists for a specific user given their user_id.
+    """
     user = request.user
 
     # Ensure the authenticated user is accessing their own wishlists

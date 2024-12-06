@@ -4,13 +4,13 @@ from wayfinder.models import Tag
 from wayfinder.serializers import TagSerializer
 from rest_framework.permissions import AllowAny
 
-'''--- GET REQUESTS ---'''
+"""--- GET REQUESTS ---"""
 
 @api_view(['GET'])
 @authentication_classes([])
 @permission_classes([AllowAny]) 
 def get_tags(request):
-    '''
+    """
     Get all tags from the database, sorted by name.
 
     Parameters:
@@ -18,7 +18,7 @@ def get_tags(request):
 
     Returns:
         JsonResponse: JSON response with all tags sorted by name
-    '''
+    """
     tags = Tag.objects.all().order_by('name')
     serializer = TagSerializer(tags, many=True)
     return JsonResponse({'data': serializer.data})

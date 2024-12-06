@@ -11,7 +11,7 @@ from rest_framework.permissions import AllowAny
 from django.db.models import Q
 import json
 
-'''--- POST REQUESTS ---'''
+"""--- POST REQUESTS ---"""
 
 @api_view(['POST'])
 @authentication_classes([JWTAuthentication])  # Use JWTAuthentication for token-based auth
@@ -108,13 +108,13 @@ def create_experience(request):
     serializer = ExperienceSerializer(experience)
     return JsonResponse({'data': serializer.data}, status=HTTP_201_CREATED)
 
-'''--- GET REQUESTS ---'''
+"""--- GET REQUESTS ---"""
 
 @api_view(['GET'])
 @authentication_classes([])
 @permission_classes([AllowAny]) 
 def get_experiences(request):
-    '''
+    """
     Get all experiences from the database.
 
     Parameters:
@@ -122,7 +122,7 @@ def get_experiences(request):
 
     Returns:
         JsonResponse: JSON response with all experiences
-    '''
+    """
     experiences = Experience.objects.all().order_by('-average_rating', '-number_of_ratings')
     serializer = ExperienceSerializer(experiences, many=True)
     return JsonResponse({'data': serializer.data})
@@ -131,7 +131,7 @@ def get_experiences(request):
 @authentication_classes([])
 @permission_classes([AllowAny]) 
 def get_experiences_with_filters(request):
-    '''
+    """
     Get all experiences from the database with filters.
 
     Parameters:
@@ -142,7 +142,7 @@ def get_experiences_with_filters(request):
 
     Returns:
         JsonResponse: JSON response with filtered experiences
-    '''
+    """
     # Step 1: Get query parameters
     tags = request.GET.get('tags', None)
     search_query = request.GET.get('search_query', None)
@@ -187,7 +187,7 @@ def get_experiences_with_filters(request):
 @authentication_classes([])
 @permission_classes([AllowAny]) 
 def get_experience_by_id(request, experience_id):
-    '''
+    """
     Gets an experience from the database by its experience_id.
 
     Parameters:
@@ -196,7 +196,7 @@ def get_experience_by_id(request, experience_id):
 
     Returns:
         JsonResponse: JSON response with the experience
-    '''
+    """
     experience = get_object_or_404(Experience, experience_id=experience_id)
     serializer = ExperienceSerializer(experience)
     return JsonResponse({'data': serializer.data})
@@ -205,7 +205,7 @@ def get_experience_by_id(request, experience_id):
 @authentication_classes([])
 @permission_classes([AllowAny])
 def get_experiences_by_user_id(request, user_id):
-    '''
+    """
     Get all experiences created by a specific user.
 
     Parameters:
@@ -214,7 +214,7 @@ def get_experiences_by_user_id(request, user_id):
 
     Returns:
         JsonResponse: JSON response with all experiences created by the user
-    '''
+    """
     experiences = Experience.objects.filter(creator=user_id).order_by('-date_posted')
     serializer = ExperienceSerializer(experiences, many=True)
     return JsonResponse({'data': serializer.data})

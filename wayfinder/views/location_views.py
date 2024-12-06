@@ -7,6 +7,9 @@ from rest_framework.permissions import AllowAny
 @authentication_classes([])
 @permission_classes([AllowAny]) 
 def city_search(request):
+    """
+    Search for cities and countries based on the provided query.
+    """
     query = request.GET.get('q', '')  # Get the search query
     
     data = [] # Declare initial data list

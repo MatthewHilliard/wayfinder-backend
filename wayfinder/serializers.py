@@ -3,25 +3,8 @@ from cities_light.models import City, Country, Region
 from .models import *
 from dj_rest_auth.registration.serializers import RegisterSerializer
 
-# NOTE: Each model should have a corresponding serializer to handle validation and
-# conversion of incoming data, as well as serializing outgoing data to be
-# returned in responses.
+"""--- Auth Serializers ---"""
 
-class CitySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = City
-        fields = ['id', 'name']  # Include relevant city fields
-        
-class RegionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Region
-        fields = ['id', 'name']  # Include relevant region fields
-
-class CountrySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Country
-        fields = ['id', 'name']  # Include relevant country fields
-        
 class CustomRegisterSerializer(RegisterSerializer):
     name = serializers.CharField(max_length=100)
     location_type = serializers.CharField(max_length=50, required=True)
@@ -53,6 +36,25 @@ class CustomRegisterSerializer(RegisterSerializer):
         
         # Save user with updated fields
         user.save(update_fields=["name", "country", "city"])
+        
+"""--- Django Cities Light Serializers ---"""
+
+class CitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = City
+        fields = ['id', 'name']  # Include relevant city fields
+        
+class RegionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Region
+        fields = ['id', 'name']  # Include relevant region fields
+
+class CountrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Country
+        fields = ['id', 'name']  # Include relevant country fields
+        
+"""--- Application Serializers ---"""
         
 class UserSerializer(serializers.ModelSerializer):
     country_info = CountrySerializer(source='country', read_only=True)  # Serialize country info for GET requests
