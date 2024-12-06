@@ -1,0 +1,1 @@
+web: gunicorn wayfinder-backend.wsgi --log-file -
