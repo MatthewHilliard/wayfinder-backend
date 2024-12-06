@@ -53,6 +53,20 @@ class CustomRegisterSerializer(RegisterSerializer):
         
         # Save user with updated fields
         user.save(update_fields=["name", "country", "city"])
+        
+class UserSerializer(serializers.ModelSerializer):
+    country_info = CountrySerializer(source='country', read_only=True)  # Serialize country info for GET requests
+    city_info = CitySerializer(source='city', read_only=True)  # Serialize city info for GET requests
+    profile_picture_url = serializers.SerializerMethodField()  # Add custom field for profile picture URL
+    
+    class Meta:
+        model = User
+        fields = '__all__'
+        
+    def get_profile_picture_url(self, obj):
+        if obj.profile_picture:
+            return f"{settings.WEBSITE_URL}{obj.profile_picture.url}"
+        return None
 
 class LocationSerializer(serializers.ModelSerializer):
     city_info = CitySerializer(source='city', read_only=True)  # Serialize city info for GET requests
@@ -67,10 +81,11 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = '__all__'
-        
+
 class ExperienceSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True, read_only=True)  # Serialize related tags for GET requests
     location_info = LocationSerializer(source='location', read_only=True)  # Serialize related location for GET requests
+    creator_info = UserSerializer(source='creator')  # Add custom field for creator info
     image_url = serializers.SerializerMethodField()  # Add custom field for image URL
 
     class Meta:
@@ -80,20 +95,6 @@ class ExperienceSerializer(serializers.ModelSerializer):
     def get_image_url(self, obj):
         if obj.image:
             return f"{settings.WEBSITE_URL}{obj.image.url}"
-        return None
-    
-class UserSerializer(serializers.ModelSerializer):
-    country_info = CountrySerializer(source='country', read_only=True)  # Serialize country info for GET requests
-    city_info = CitySerializer(source='city', read_only=True)  # Serialize city info for GET requests
-    profile_picture_url = serializers.SerializerMethodField()  # Add custom field for profile picture URL
-    
-    class Meta:
-        model = User
-        fields = '__all__'
-        
-    def get_profile_picture_url(self, obj):
-        if obj.profile_picture:
-            return f"{settings.WEBSITE_URL}{obj.profile_picture.url}"
         return None
         
 class RatingSerializer(serializers.ModelSerializer):
