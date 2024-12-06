@@ -2,8 +2,7 @@
 from django.urls import path
 from dj_rest_auth.jwt_auth import get_refresh_view
 from wayfinder.views.auth_views import CustomRegisterView, CustomLoginView
-from dj_rest_auth.views import LoginView, LogoutView, UserDetailsView
-from rest_framework_simplejwt.views import TokenVerifyView
+from dj_rest_auth.views import LogoutView
 
 # URL routes for calls relating to authentication
 urlpatterns = [
