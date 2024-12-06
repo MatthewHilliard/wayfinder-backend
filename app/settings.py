@@ -28,7 +28,10 @@ AUTH_USER_MODEL = 'wayfinder.User'
 SITE_ID = 1
 
 # Define the server site URL
-WEBSITE_URL = 'http://localhost:8000'
+if DEBUG:
+    WEBSITE_URL = 'http://localhost:8000'
+else:
+    WEBSITE_URL = 'https://wayfinder-backend-prod-aac06f5eb6d4.herokuapp.com/'
 
 # JWT object settings
 SIMPLE_JWT = {
@@ -62,7 +65,19 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://localhost:3000",
-    "https://wayfinder-backend-prod-aac06f5eb6d4.herokuapp.com/",
+    "https://wayfinder-backend-prod-aac06f5eb6d4.herokuapp.com",
+]
+
+CORS_TRUSTED_ORIGINS = [
+    "http://localhost:8000",
+    "http://localhost:3000",
+    "https://wayfinder-backend-prod-aac06f5eb6d4.herokuapp.com",
+]
+
+CORS_ORIGINS_WHITELIST = [
+    "http://localhost:8000",
+    "http://localhost:3000",
+    "https://wayfinder-backend-prod-aac06f5eb6d4.herokuapp.com",
 ]
 
 # Django REST Auth settings
@@ -110,6 +125,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'wayfinder.urls'
