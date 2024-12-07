@@ -27,6 +27,4 @@ urlpatterns = [
     path('tips/', include(tips_urls)),
 ]
 
-# If in debug mode, add media url
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
