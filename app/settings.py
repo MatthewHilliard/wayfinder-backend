@@ -143,13 +143,25 @@ TEMPLATES = [
 WSGI_APPLICATION = 'app.wsgi.application'
 
 # Database
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),
-        conn_max_age=600,
-        ssl_require=True
-    )
-}
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': os.getenv('SQL_ENGINE', 'django.db.backends.postgresql'),
+            'NAME': os.getenv('SQL_DATABASE', 'postgres'),
+            'USER': os.getenv('SQL_USER', 'postgresuser'),
+            'PASSWORD': os.getenv('SQL_PASSWORD', 'postgrespassword'),
+            'HOST': os.getenv('SQL_HOST', 'localhost'),
+            'PORT': os.getenv('SQL_PORT', '5432'),
+        }
+    }
+else:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL'),
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
 
 
 # Password validation
