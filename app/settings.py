@@ -198,7 +198,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Media files (uploaded by users)
 if os.getenv('ENV') == 'PRODUCTION':
     # Production settings
-    MEDIA_URL = 'https://wayfinder-backend-prod-b2b08ed79f38.herokuapp.com/media/'
+    MEDIA_URL = 'wayfinder-backend-prod-b2b08ed79f38.herokuapp.com/media/'
     MEDIA_ROOT = BASE_DIR / 'media'
 else:
     # Local development settings
