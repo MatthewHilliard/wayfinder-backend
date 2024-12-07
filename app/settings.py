@@ -22,10 +22,10 @@ AUTH_USER_MODEL = 'wayfinder.User'
 SITE_ID = 1
 
 # Define the server site URL
-if DEBUG:
-    WEBSITE_URL = 'http://localhost:8000'
-else:
+if os.getenv('ENV') == 'PRODUCTION':
     WEBSITE_URL = 'https://wayfinder-backend-prod-b2b08ed79f38.herokuapp.com'
+else:
+    WEBSITE_URL = 'http://localhost:8000'
 
 # JWT object settings
 SIMPLE_JWT = {
