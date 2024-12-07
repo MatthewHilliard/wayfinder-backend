@@ -146,7 +146,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'app.wsgi.application'
 
 # Database
-if DEBUG:
+if os.getenv('ENV') == 'PRODUCTION':
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL'),
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
+else:
     DATABASES = {
         'default': {
             'ENGINE': os.getenv('SQL_ENGINE', 'django.db.backends.postgresql'),
@@ -156,14 +164,6 @@ if DEBUG:
             'HOST': os.getenv('SQL_HOST', 'localhost'),
             'PORT': os.getenv('SQL_PORT', '5432'),
         }
-    }
-else:
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=os.getenv('DATABASE_URL'),
-            conn_max_age=600,
-            ssl_require=True
-        )
     }
 
 
