@@ -60,18 +60,21 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://localhost:3000",
     "https://wayfinder-backend-prod-aac06f5eb6d4.herokuapp.com",
+    "https://wayfinder-frontend-prod-094351007f71.herokuapp.com"
 ]
 
 CORS_TRUSTED_ORIGINS = [
     "http://localhost:8000",
     "http://localhost:3000",
     "https://wayfinder-backend-prod-aac06f5eb6d4.herokuapp.com",
+    "https://wayfinder-frontend-prod-094351007f71.herokuapp.com"
 ]
 
 CORS_ORIGINS_WHITELIST = [
     "http://localhost:8000",
     "http://localhost:3000",
     "https://wayfinder-backend-prod-aac06f5eb6d4.herokuapp.com",
+    "https://wayfinder-frontend-prod-094351007f71.herokuapp.com"
 ]
 
 # Django REST Auth settings
