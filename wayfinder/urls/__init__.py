@@ -26,5 +26,3 @@ urlpatterns = [
     path('wishlists/', include(wishlist_urls)),
     path('tips/', include(tips_urls)),
 ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
