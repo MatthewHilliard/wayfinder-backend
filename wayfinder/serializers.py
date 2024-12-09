@@ -67,7 +67,8 @@ class UserSerializer(serializers.ModelSerializer):
         
     def get_profile_picture_url(self, obj):
         if obj.profile_picture:
-            return f"{settings.WEBSITE_URL}{obj.profile_picture.url}"
+            # Directly return the S3 URL
+            return obj.profile_picture.url
         return None
 
 class LocationSerializer(serializers.ModelSerializer):
@@ -96,7 +97,8 @@ class ExperienceSerializer(serializers.ModelSerializer):
         
     def get_image_url(self, obj):
         if obj.image:
-            return f"{settings.WEBSITE_URL}{obj.image.url}"
+            # Directly return the S3 URL
+            return obj.image.url
         return None
         
 class RatingSerializer(serializers.ModelSerializer):
