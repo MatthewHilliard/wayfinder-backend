@@ -59,7 +59,6 @@ class CountrySerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     country_info = CountrySerializer(source='country', read_only=True)  # Serialize country info for GET requests
     city_info = CitySerializer(source='city', read_only=True)  # Serialize city info for GET requests
-    profile_picture_url = serializers.SerializerMethodField()  # Add custom field for profile picture URL
     
     class Meta:
         model = User
@@ -89,7 +88,6 @@ class ExperienceSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True, read_only=True)  # Serialize related tags for GET requests
     location_info = LocationSerializer(source='location', read_only=True)  # Serialize related location for GET requests
     creator_info = UserSerializer(source='creator')  # Add custom field for creator info
-    image_url = serializers.SerializerMethodField()  # Add custom field for image URL
 
     class Meta:
         model = Experience
