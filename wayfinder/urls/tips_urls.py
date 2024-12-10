@@ -1,4 +1,12 @@
-# urls/tips_urls.py
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module defines URL routes for tip-related operations, 
+including creating tips, retrieving tips with filters, and retrieving tips 
+created by a specific user. These routes map to the corresponding views in 
+the `tip_views` module.
+"""
+
 from django.urls import path
 from wayfinder.views import tip_views
 

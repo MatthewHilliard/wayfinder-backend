@@ -1,3 +1,14 @@
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module provides API views for managing wishlists and wishlist items. 
+The `create_wishlist` function allows authenticated users to create their own wishlists. 
+The `create_wishlist_item` function lets users add items to a specific wishlist while ensuring 
+the wishlist belongs to the authenticated user. The `get_user_wishlists` and `get_wishlist_items` 
+functions retrieve all wishlists for a user and the items within a specific wishlist, respectively, 
+enforcing authentication and ownership checks.
+"""
+
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from wayfinder.models import Experience, Wishlist, WishlistItem

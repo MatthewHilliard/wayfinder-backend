@@ -1,3 +1,12 @@
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module provides API views for managing tips in the application. The `create_tip` 
+function allows authenticated users to create a new tip for a specified location. The `get_tips_with_filters` 
+function retrieves tips with optional filters for location type and ID, and the `get_tips_by_user_id` 
+function retrieves tips created by a specific user.
+"""
+
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from django.shortcuts import get_object_or_404

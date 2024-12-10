@@ -1,3 +1,11 @@
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module provides API views for managing user data. The `get_user_by_id` function 
+retrieves a user's details by their ID, while the `update_user` function allows an authenticated user 
+to update their own profile information, including their name and profile picture.
+"""
+
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from wayfinder.models import User

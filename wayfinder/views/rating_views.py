@@ -1,3 +1,12 @@
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module provides API views for creating and retrieving ratings for experiences. 
+The `create_rating` function allows authenticated users to rate an experience and updates the 
+experience's average rating and number of ratings. The `get_experience_ratings` function retrieves 
+all ratings for a specific experience, sorted by the most recent date.
+"""
+
 from django.http import JsonResponse
 from django.shortcuts import get_list_or_404
 from rest_framework.decorators import api_view, authentication_classes, permission_classes

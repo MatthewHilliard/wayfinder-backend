@@ -1,3 +1,11 @@
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module provides an API view for searching cities and countries. 
+The `city_search` function retrieves matching countries and cities based on a search 
+query and returns their details, including city name, region, and country, in a structured JSON response.
+"""
+
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from cities_light.models import Country, City

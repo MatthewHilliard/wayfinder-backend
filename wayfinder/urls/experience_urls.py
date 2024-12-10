@@ -1,4 +1,12 @@
-# urls/experience_urls.py
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module defines URL routes for handling experience-related operations, 
+including creating experiences, retrieving all experiences, filtering experiences by criteria, 
+and retrieving experiences by ID or user ID. These routes map to the corresponding views in 
+the `experience_views` module.
+"""
+
 from django.urls import path
 from wayfinder.views import experience_views
 

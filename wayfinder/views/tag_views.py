@@ -1,3 +1,11 @@
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module provides an API view for retrieving all tags. The `get_tags` 
+function fetches tags from the database, sorts them alphabetically by name, and returns 
+them in a JSON response.
+"""
+
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from wayfinder.models import Tag

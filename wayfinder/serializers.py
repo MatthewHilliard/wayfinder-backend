@@ -1,3 +1,10 @@
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module contains serializers for user authentication, location handling, and application-specific models.
+The serializers define how data is serialized/deserialized and include logic for handling nested and related models.
+"""
+
 from rest_framework import serializers
 from cities_light.models import City, Country, Region
 from .models import *

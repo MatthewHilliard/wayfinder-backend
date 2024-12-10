@@ -1,3 +1,11 @@
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module defines custom views for user registration and login. The `CustomRegisterView` 
+extends the default `RegisterView` to handle duplicate email registration errors gracefully, and the 
+`CustomLoginView` modifies the default login behavior to include a refresh token in the response.
+"""
+
 from dj_rest_auth.registration.views import RegisterView
 from rest_framework.exceptions import ValidationError
 from django.db import IntegrityError

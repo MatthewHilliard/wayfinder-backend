@@ -1,3 +1,11 @@
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module defines the core models for the application, including Location, User, Experience, Tip, 
+Wishlist, WishlistItem, Rating, and Tag. These models represent key entities in the application and establish 
+relationships between users, locations, and experiences.
+"""
+
 from django.db import models
 from django.conf import settings
 import uuid

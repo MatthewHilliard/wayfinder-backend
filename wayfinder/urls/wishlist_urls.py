@@ -1,4 +1,12 @@
-# urls/wishlist_urls.py
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module defines URL routes for wishlist-related operations, 
+including creating wishlists, adding items to wishlists, retrieving all wishlists for a user, 
+and retrieving items within a specific wishlist. These routes map to the corresponding views 
+in the `wishlist_views` module.
+"""
+
 from django.urls import path
 from wayfinder.views import wishlist_views
 

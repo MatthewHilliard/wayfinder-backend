@@ -1,3 +1,12 @@
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module contains the Django project settings for the Wayfinder application. 
+It includes configurations for security, authentication, database connections, installed apps, 
+middleware, REST framework settings, JWT token handling, CORS settings, and static file storage. 
+The settings are designed to adapt based on the environment (production or development) using environment variables.
+"""
+
 import os
 from datetime import timedelta
 from pathlib import Path

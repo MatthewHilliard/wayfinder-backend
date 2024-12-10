@@ -1,3 +1,10 @@
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module provides helper functions, currently just `find_nearest_city`, which attempts to locate 
+the nearest city to a given latitude and longitude by incrementally expanding the search range.
+"""
+
 from cities_light.models import City
 
 def find_nearest_city(latitude, longitude, max_attempts=5, increment=0.5):

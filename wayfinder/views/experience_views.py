@@ -1,3 +1,11 @@
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module contains API views for handling requests related to experiences in the application. 
+It includes functionalities for creating, retrieving, and filtering experiences, as well as retrieving 
+experiences by user ID or specific filters. The module also ensures proper authentication and permission handling.
+"""
+
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from django.shortcuts import get_object_or_404

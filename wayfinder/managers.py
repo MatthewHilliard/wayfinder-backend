@@ -1,3 +1,11 @@
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module defines a custom user manager class, `CustomUserManager`, for managing 
+the creation of regular and superuser accounts. The class extends the functionality of Django's 
+`UserManager` to include custom logic for user creation with additional fields like `name`.
+"""
+
 from django.contrib.auth.models import UserManager
 
 class CustomUserManager(UserManager):

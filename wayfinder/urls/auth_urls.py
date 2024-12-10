@@ -1,4 +1,11 @@
-# urls/auth_urls.py
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module defines URL routes for authentication-related operations, 
+including user registration, login, logout, and token refresh. It integrates custom 
+views for registration and login to extend the default behavior provided by Django REST Auth.
+"""
+
 from django.urls import path
 from dj_rest_auth.jwt_auth import get_refresh_view
 from wayfinder.views.auth_views import CustomRegisterView, CustomLoginView

@@ -1,4 +1,12 @@
-# urls/__init__.py
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module serves as the main entry point for defining URL routes in the application. 
+It consolidates URLs from separate modules, such as `auth_urls`, `experience_urls`, and others, 
+into a single list for better organization and scalability. The `urlpatterns` includes routes for 
+admin, authentication, experiences, locations, tags, users, ratings, wishlists, and tips.
+"""
+
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import include, path

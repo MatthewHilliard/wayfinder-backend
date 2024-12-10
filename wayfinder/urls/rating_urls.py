@@ -1,4 +1,11 @@
-# urls/rating_urls.py
+"""
+Author: Matthew Hilliard
+Email: mch2003@bu.edu
+Description: This module defines URL routes for rating-related operations, 
+including creating a rating for an experience and retrieving all ratings for a 
+specific experience. These routes map to the corresponding views in the `rating_views` module.
+"""
+
 from django.urls import path
 from wayfinder.views import rating_views
 
